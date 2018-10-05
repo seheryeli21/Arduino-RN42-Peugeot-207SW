@@ -9,7 +9,6 @@
 SoftwareSerial swSer(5, 6);
 const int SPI_CS_PIN = 10;
 int RN42VCC = 3;
-int led = 7;
 unsigned char len = 0;
 unsigned char buf[8];
 MCP_CAN CAN(SPI_CS_PIN);
@@ -42,9 +41,9 @@ void setup()
   pinMode(led, OUTPUT);
   digitalWrite(RN42VCC, HIGH);
   BPMod = new BPLib(swSer);
-  delay(1000);
+  delay(1000);                           // das delay dient dazu,dass das RN42 genug Zeit hat die serielle Schnittstelle zu verbinden
   //BPMod->begin(BP_MODE_HID, BP_HID_KEYBOARD);
-  BPMod->sendCmd(BP_RECONNECT);
+  BPMod->sendCmd(BP_RECONNECT);          // Verbindet sich automatisch sobald die Verbindung getrennt wurde
 }
 void loop()
 {
@@ -75,7 +74,7 @@ void loop()
     BPMod->keyRelease();
     delay(300);
   }
-  if (canId == 0x21F && buf[0] == 12)
+  if (canId == 0x21F && buf[0] == 12)      // Wenn am Lenkradfernb. Lauter/Leiser gleichzeitig betätigt werden.
   {
     BPMod->playPause();
     delay(250);
