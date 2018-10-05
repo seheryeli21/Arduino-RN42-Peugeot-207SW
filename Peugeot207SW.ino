@@ -18,7 +18,7 @@ void setup()
 { swSer.begin(115200);
   Serial.begin(115200);
 
-  while (CAN_OK != CAN.begin(CAN_250KBPS))              // init can bus : baudrate = 500k
+  while (CAN_OK != CAN.begin(CAN_250KBPS))          // init can bus : baudrate = 500k
   {
     Serial.println("CAN BUS Shield init fail");
     Serial.println(" Init CAN BUS Shield again");
@@ -27,27 +27,27 @@ void setup()
   }
   Serial.println("CAN BUS Shield init ok!");
 
-  CAN.init_Mask(0, 0, 0x3ff);                         // there are 2 mask in mcp2515, you need to set both of them
+  CAN.init_Mask(0, 0, 0x3ff);                      // there are 2 mask in mcp2515, you need to set both of them
   CAN.init_Mask(1, 0, 0x3ff);
   //set filter, we can receive id from 0x04 ~ 0x09
-  CAN.init_Filt(0, 0, 0x3E5);                          // there are 6 filter in mcp2515
-  CAN.init_Filt(1, 0, 0x21F);                          // there are 6 filter in mcp2515
+  CAN.init_Filt(0, 0, 0x3E5);                      // there are 6 filter in mcp2515
+  CAN.init_Filt(1, 0, 0x21F);                      // there are 6 filter in mcp2515
 
-  //CAN.init_Filt(2, 0, 0x06);                          // there are 6 filter in mcp2515
-  //CAN.init_Filt(3, 0, 0x07);                          // there are 6 filter in mcp2515
-  //CAN.init_Filt(4, 0, 0x08);                          // there are 6 filter in mcp2515
-  //CAN.init_Filt(5, 0, 0x09);                          // there are 6 filter in mcp2515
+  //CAN.init_Filt(2, 0, 0x06);                     // there are 6 filter in mcp2515
+  //CAN.init_Filt(3, 0, 0x07);                     // there are 6 filter in mcp2515
+  //CAN.init_Filt(4, 0, 0x08);                     // there are 6 filter in mcp2515
+  //CAN.init_Filt(5, 0, 0x09);                     // there are 6 filter in mcp2515
   pinMode(RN42VCC, OUTPUT);
   pinMode(led, OUTPUT);
   digitalWrite(RN42VCC, HIGH);
   BPMod = new BPLib(swSer);
-  delay(1000);                           // das delay dient dazu,dass das RN42 genug Zeit hat die serielle Schnittstelle zu verbinden
+  delay(1000);                      // das delay dient dazu,dass das RN42 genug Zeit hat die serielle Schnittstelle zu verbinden
   //BPMod->begin(BP_MODE_HID, BP_HID_KEYBOARD);
-  BPMod->sendCmd(BP_RECONNECT);          // Verbindet sich automatisch sobald die Verbindung getrennt wurde
+  BPMod->sendCmd(BP_RECONNECT);     // Verbindet sich automatisch sobald die Verbindung getrennt wurde
 }
 void loop()
 {
-  CAN.readMsgBuf(&len, buf);    // read data,  len: data length, buf: data buf
+  CAN.readMsgBuf(&len, buf);        // read data,  len: data length, buf: data buf
   unsigned long canId = CAN.getCanId();
   Serial.println("-----------------------------");
   Serial.print("Get data from ID: 0x");
